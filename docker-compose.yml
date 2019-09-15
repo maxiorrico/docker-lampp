@@ -1,0 +1,61 @@
+version: '3.2'
+
+services: 
+  php56:
+    build: './php56'
+    networks:
+      - backend
+    container_name: lampp-php56
+    volumes: 
+      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
+    # ports: 
+    #   - "${LOCAL_LISTEN_ADDR}9000:9000"
+      
+  php72:
+    build: './php72'
+    networks:
+      - backend
+    container_name: lampp-php72
+    volumes: 
+      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/ 
+  #   ports: 
+  #     - "${LOCAL_LISTEN_ADDR}9090:9000"
+  
+  apache:
+    build: './apache'
+    container_name: lampp-apache
+    volumes: 
+      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/  
+    ports:
+      # ---- Format: ----
+      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_HTTPD}:80"
+      - "${LOCAL_LISTEN_ADDR}8080:8080"
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_HTTPD_SSL}:443"
+    # depends_on:
+    #   - php56
+    networks:
+      - backend
+      - frontend
+    environment:
+      ##
+      ## UserID and GroupID
+      ##
+      - NEW_UID
+      - NEW_GID
+
+  mysql:
+    image: mysql:5.6.40
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD
+    ports: 
+      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306"
+    volumes:
+      - ${HOST_MYSQL_DATADIR}:/var/lib/mysql
+
+
+networks:
+  frontend:
+  backend:
