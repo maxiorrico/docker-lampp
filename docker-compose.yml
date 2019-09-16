@@ -1,31 +1,31 @@
 version: '3.2'
 
-services: 
+services:
   php56:
     build: './php56'
     networks:
       - backend
     container_name: lampp-php56
-    volumes: 
+    volumes:
       - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
-    # ports: 
+    # ports:
     #   - "${LOCAL_LISTEN_ADDR}9000:9000"
-      
+
   php72:
     build: './php72'
     networks:
       - backend
     container_name: lampp-php72
-    volumes: 
-      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/ 
-  #   ports: 
+    volumes:
+      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
+  #   ports:
   #     - "${LOCAL_LISTEN_ADDR}9090:9000"
-  
+
   apache:
     build: './apache'
     container_name: lampp-apache
-    volumes: 
-      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/  
+    volumes:
+      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
     ports:
       # ---- Format: ----
       # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
@@ -50,7 +50,7 @@ services:
       - backend
     environment:
       - MYSQL_ROOT_PASSWORD
-    ports: 
+    ports:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306"
     volumes:
       - ${HOST_MYSQL_DATADIR}:/var/lib/mysql
