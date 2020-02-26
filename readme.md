@@ -13,7 +13,13 @@ docker run --rm --interactive --tty \
   --user $(id -u):$(id -g) \
   composer install
 ```
-
+```
+docker run --rm --interactive --tty \
+  --volume $PWD:/app \
+  --user $(id -u):$(id -g) \
+  prooph/composer:5.6 \
+  install
+```
 correr el comando anterior en el directorio del proyecto laravel
 variantes : 'composer/composer:php5 install' , default=php7
           : 'composer/composer:php5-alpine install'
@@ -35,4 +41,8 @@ docker-compose exec php72 php laravel-app/artisan make:controller MyController
 ```
 docker system prune
 ```
+
+# TODO
+
+* build php56 con zip, ...
 
