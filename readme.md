@@ -42,6 +42,14 @@ docker-compose exec php72 php laravel-app/artisan make:controller MyController
 docker system prune
 ```
 
+# Apache SSL suppport 
+Dentro de el directorio 'apache' :
+```
+openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj \
+    "/C=AR/ST=Tucuman/L=SMTucuman/O=Security/CN=localhost" \
+    -keyout ./ssl.key -out ./ssl.crt
+``` 
+
 # TODO
 
 * build php56 con zip, ...

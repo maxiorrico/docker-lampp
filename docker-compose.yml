@@ -31,6 +31,7 @@ services:
       # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
       # - "${LOCAL_LISTEN_ADDR}${HOST_PORT_HTTPD}:80"
       - "${LOCAL_LISTEN_ADDR}81:80"
+      - "${LOCAL_LISTEN_ADDR}443:443"
       - "${LOCAL_LISTEN_ADDR}8080:8080"
       # - "${LOCAL_LISTEN_ADDR}${HOST_PORT_HTTPD_SSL}:443"
     # depends_on:

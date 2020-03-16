@@ -6,3 +6,10 @@ RUN apk update; \
 COPY demo.apache.conf /usr/local/apache2/conf/demo.apache.conf
 RUN echo "Include /usr/local/apache2/conf/demo.apache.conf" \
     >> /usr/local/apache2/conf/httpd.conf
+
+COPY ssl.crt /etc/apache2/ssl/ssl.crt
+COPY ssl.key /etc/apache2/ssl/ssl.key
+
+
+EXPOSE 80
+EXPOSE 443

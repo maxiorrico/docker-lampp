@@ -6,8 +6,21 @@ RUN apk update \
 RUN apk add --no-cache \
     icu-dev \
     libmcrypt-dev \
+    libxslt-dev \
     gettext \
     gettext-dev;
+# For mongodb support
+RUN apk add --update --no-cache --virtual .ext-deps \
+    gcc g++ autoconf make openssl-dev;
+RUN \
+    apk add --no-cache --virtual .mongodb-ext-build-deps openssl-dev pcre-dev;
+RUN \
+    # pecl install redis && \
+    pecl install mongodb && \
+    apk del .mongodb-ext-build-deps && \
+    pecl clear-cache && \
+    docker-php-ext-enable mongodb && \
+    docker-php-source delete;
 
 RUN docker-php-ext-configure intl \
     && docker-php-ext-configure mcrypt \
@@ -22,4 +35,9 @@ RUN docker-php-ext-install \
     pcntl \
     mcrypt \
     intl \
+    xsl \
+    soap \
     gettext;
+
+# RUN apk del build-dependencies && \
+RUN rm -rf /var/cache/apk/*
