@@ -17,9 +17,13 @@ RUN \
 RUN \
     # pecl install redis && \
     pecl install mongodb && \
+    pecl install mongo && \
+    pecl install xdebug-2.5.5 && \
     apk del .mongodb-ext-build-deps && \
     pecl clear-cache && \
     docker-php-ext-enable mongodb && \
+    docker-php-ext-enable mongo && \
+    docker-php-ext-enable xdebug && \
     docker-php-source delete;
 
 RUN docker-php-ext-configure intl \

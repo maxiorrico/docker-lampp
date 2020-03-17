@@ -63,3 +63,13 @@ HOST_PORT_MYSQL=3306
 ### Host MySQL data directory (/var/lib/mysql)
 ###
 HOST_MYSQL_DATADIR=~/workspace/mysql/data
+
+###
+### Expose Mongo Port to Host
+###
+HOST_PORT_MONGO=27017
+
+###
+### Host MySQL data directory (/data/db)
+###
+HOST_MONGO_DATADIR=~/workspace/mongo/data
