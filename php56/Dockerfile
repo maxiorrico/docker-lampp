@@ -43,5 +43,7 @@ RUN docker-php-ext-install \
     soap \
     gettext;
 
-# RUN apk del build-dependencies && \
+#RUN apk del build-dependencies;
+#RUN apk del gcc g++ autoconf make openssl-dev pcre-dev;
+RUN apk del .ext-deps;
 RUN rm -rf /var/cache/apk/*
