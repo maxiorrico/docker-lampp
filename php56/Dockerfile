@@ -4,6 +4,7 @@ RUN apk update \
     apk upgrade;
 
 RUN apk add --no-cache \
+    zip libzip-dev \
     icu-dev \
     libmcrypt-dev \
     libxslt-dev \
@@ -29,7 +30,8 @@ RUN \
 RUN docker-php-ext-configure intl \
     && docker-php-ext-configure mcrypt \
     && docker-php-ext-configure pcntl \
-    && docker-php-ext-configure gettext;
+    && docker-php-ext-configure gettext \
+    && docker-php-ext-configure zip --with-libzip;
 
 RUN docker-php-ext-install \
     mysqli \
@@ -41,9 +43,12 @@ RUN docker-php-ext-install \
     intl \
     xsl \
     soap \
+    zip \
     gettext;
 
 #RUN apk del build-dependencies;
 #RUN apk del gcc g++ autoconf make openssl-dev pcre-dev;
-RUN apk del .ext-deps;
+#RUN apk del .ext-deps;
+RUN apk del gettext-dev;
+    # libzip-dev libmcrypt-dev libxslt-dev 
 RUN rm -rf /var/cache/apk/*
