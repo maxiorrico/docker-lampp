@@ -8,8 +8,8 @@ RUN apk add --no-cache \
     icu-dev \
     libmcrypt-dev \
     libxslt-dev \
-    gettext \
-    gettext-dev;
+    freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+    gettext gettext-dev;
 # For mongodb support
 RUN apk add --update --no-cache --virtual .ext-deps \
     gcc g++ autoconf make openssl-dev;
@@ -32,6 +32,7 @@ RUN docker-php-ext-configure intl \
     && docker-php-ext-configure mcrypt \
     && docker-php-ext-configure pcntl \
     && docker-php-ext-configure gettext \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure zip --with-libzip;
 
 RUN docker-php-ext-install \
@@ -45,6 +46,7 @@ RUN docker-php-ext-install \
     xsl \
     soap \
     zip \
+    gd \
     gettext;
 
 #RUN apk del build-dependencies;
@@ -53,3 +55,6 @@ RUN docker-php-ext-install \
 RUN apk del gettext-dev;
     # libzip-dev libmcrypt-dev libxslt-dev 
 RUN rm -rf /var/cache/apk/*
+
+RUN wget https://phar.phpunit.de/phpunit-5.7.9.phar -O /usr/local/bin/phpunit
+RUN chmod +x /usr/local/bin/phpunit

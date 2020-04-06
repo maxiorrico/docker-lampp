@@ -61,6 +61,7 @@ services:
       - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306"
     volumes:
       - ${HOST_MYSQL_DATADIR}:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
 
   mongo:
     image: mongo:3.6.17
@@ -72,6 +73,22 @@ services:
       - ${HOST_MONGO_DATADIR}:/data/db
       #- ${DATA_PATH_HOST}/mongo_config:/data/configdb
 
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack_demo
+    networks:
+      - backend
+    ports:
+      - '4563-4599:4563-4599'
+      - '8055:8080'
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - ./localstack/data:/tmp/localstack
+      #- /var/run/docker.sock:/var/run/docker.sock
+      
 networks:
   frontend:
   backend:
