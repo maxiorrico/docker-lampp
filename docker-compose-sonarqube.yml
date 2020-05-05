@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:8.2-community
+    ports:
+      - "9010:9000"
+    depends_on:
+       - db
+    networks:
+      - sonarnet
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
+      - sonar.jdbc.username=root
+      - sonar.jdbc.password=root
+      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
+      # - NEW_UID
+      # - NEW_GID
+    volumes:
+      - ./sonarqube/conf:/opt/sonarqube/conf
+      - ./sonarqube/data:/opt/sonarqube/data
+      - ./sonarqube/extensions:/opt/sonarqube/extensions
+      - ./sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+  db:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    networks:
+      - sonarnet
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - ./postgresql/sonarqube:/var/lib/postgresql
+      - ./postgresql/sonarqube_data:/var/lib/postgresql/data
+
+networks:
+  sonarnet:

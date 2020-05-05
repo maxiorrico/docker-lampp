@@ -24,6 +24,15 @@ services:
   #   ports:
   #     - "${LOCAL_LISTEN_ADDR}9090:9000"
 
+  php73:
+    build: './php73'
+    networks:
+      - backend
+    container_name: lampp-php73
+    volumes:
+      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
+      - ./php73/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini
+
   apache:
     build: './apache'
     container_name: lampp-apache
@@ -35,7 +44,8 @@ services:
       # - "${LOCAL_LISTEN_ADDR}${HOST_PORT_HTTPD}:80"
       - "${LOCAL_LISTEN_ADDR}81:80"
       - "${LOCAL_LISTEN_ADDR}443:443"
-      - "${LOCAL_LISTEN_ADDR}8080:8080"
+      # - "${LOCAL_LISTEN_ADDR}8080:8080"
+      # - "${LOCAL_LISTEN_ADDR}81:8080"
     # depends_on:
     #   - php56
     #environment:

@@ -1,3 +1,9 @@
 .env
 ssl.*
 php56/docker-php-ext-xdebug.ini
+sonarqube/data
+sonarqube/bundled-plugins
+sonarqube/extensions
+sonarqube/sonar-scanner-cli-*
+postgresql/sonarqube
+postgresql/sonarqube_data

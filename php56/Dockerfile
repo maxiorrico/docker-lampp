@@ -8,6 +8,7 @@ RUN apk add --no-cache \
     icu-dev \
     libmcrypt-dev \
     libxslt-dev \
+    libxml2-dev \
     freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
     gettext gettext-dev;
 # For mongodb support
@@ -47,7 +48,8 @@ RUN docker-php-ext-install \
     soap \
     zip \
     gd \
-    gettext;
+    gettext \
+    soap;
 
 #RUN apk del build-dependencies;
 #RUN apk del gcc g++ autoconf make openssl-dev pcre-dev;
