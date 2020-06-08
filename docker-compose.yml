@@ -45,7 +45,7 @@ services:
       - "${LOCAL_LISTEN_ADDR}81:80"
       - "${LOCAL_LISTEN_ADDR}443:443"
       # - "${LOCAL_LISTEN_ADDR}8080:8080"
-      # - "${LOCAL_LISTEN_ADDR}81:8080"
+      - "${LOCAL_LISTEN_ADDR}82:8080"
     # depends_on:
     #   - php56
     #environment:
