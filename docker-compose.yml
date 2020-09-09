@@ -14,13 +14,13 @@ services:
     # environment:
       # PHP_EXTENSION_XDEBUG: 1
 
-  php72:
-    build: './php72'
-    networks:
-      - backend
-    container_name: lampp-php72
-    volumes:
-      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
+  #php72:
+  #  build: './php72'
+  #  networks:
+  #    - backend
+  #  container_name: lampp-php72
+  #  volumes:
+  #    - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
   #   ports:
   #     - "${LOCAL_LISTEN_ADDR}9090:9000"
 
