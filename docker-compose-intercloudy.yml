@@ -1,0 +1,69 @@
+version: '3.2'
+services:
+  # php56:
+  #   build: ./php56
+  #   networks:
+  #     - backend
+  #   container_name: lampp-php56
+  #   volumes:
+  #     - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+  #     - './php56/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
+  # php73:
+  #   build: ./php73
+  #   networks:
+  #     - backend
+  #   container_name: lampp-php73
+  #   volumes:
+  #     - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+  #     - './php73/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
+  # apache:
+  #   build: ./apache
+  #   container_name: lampp-apache
+  #   volumes:
+  #     - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+  #   ports:
+  #     - '${LOCAL_LISTEN_ADDR}81:80'
+  #     - '${LOCAL_LISTEN_ADDR}443:443'
+  #     - '${LOCAL_LISTEN_ADDR}82:8080'
+  #   networks:
+  #     - backend
+  #     - frontend
+  #   environment:
+  #     - NEW_UID
+  #     - NEW_GID
+  mysql57:
+    image: 'mysql:5.7.33'
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD
+    ports:
+      - '${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306'
+    volumes:
+      - '${HOST_MYSQL_DATADIR57}:/var/lib/mysql'
+      - './mysql/conf:/etc/mysql/conf.d'
+  # mongo:
+  #   image: 'mongo:3.6.17'
+  #   networks:
+  #     - backend
+  #   ports:
+  #     - '${LOCAL_LISTEN_ADDR}${HOST_PORT_MONGO}:27017'
+  #   volumes:
+  #     - '${HOST_MONGO_DATADIR}:/data/db'
+  # localstack:
+  #   image: 'localstack/localstack:latest'
+  #   container_name: localstack_demo
+  #   networks:
+  #     - backend
+  #   ports:
+  #     - '4563-4599:4563-4599'
+  #     - '8055:8080'
+  #   environment:
+  #     - SERVICES=s3
+  #     - DEBUG=1
+  #     - DATA_DIR=/tmp/localstack/data
+  #   volumes:
+  #     - './localstack/data:/tmp/localstack'
+networks:
+  frontend: null
+  backend: null
