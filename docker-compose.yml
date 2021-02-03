@@ -1,90 +1,57 @@
 version: '3.2'
-
 services:
   php56:
-    build: './php56'
+    build: ./php56
     networks:
       - backend
     container_name: lampp-php56
     volumes:
-      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
-      - ./php56/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini
-    # ports:
-    #   - "${LOCAL_LISTEN_ADDR}9001:9001"
-    # environment:
-      # PHP_EXTENSION_XDEBUG: 1
-
-  #php72:
-  #  build: './php72'
-  #  networks:
-  #    - backend
-  #  container_name: lampp-php72
-  #  volumes:
-  #    - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
-  #   ports:
-  #     - "${LOCAL_LISTEN_ADDR}9090:9000"
-
+      - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+      - './php56/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
   php73:
-    build: './php73'
+    build: ./php73
     networks:
       - backend
     container_name: lampp-php73
     volumes:
-      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
-      - ./php73/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini
-
+      - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+      - './php73/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
   apache:
-    build: './apache'
+    build: ./apache
     container_name: lampp-apache
     volumes:
-      - ${HOST_PATH_HTTPD_DATADIR}:/var/www/html/
+      - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
     ports:
-      # ---- Format: ----
-      # [HOST-ADDR : ] HOST-PORT : DOCKER-PORT
-      # - "${LOCAL_LISTEN_ADDR}${HOST_PORT_HTTPD}:80"
-      - "${LOCAL_LISTEN_ADDR}81:80"
-      - "${LOCAL_LISTEN_ADDR}443:443"
-      # - "${LOCAL_LISTEN_ADDR}8080:8080"
-      - "${LOCAL_LISTEN_ADDR}82:8080"
-    # depends_on:
-    #   - php56
-    #environment:
-      #XDEBUG_CONFIG: remote_host=docker.php56.localhost remote_port=9001 remote_enable=1
-
+      - '${LOCAL_LISTEN_ADDR}81:80'
+      - '${LOCAL_LISTEN_ADDR}443:443'
+      - '${LOCAL_LISTEN_ADDR}82:8080'
     networks:
       - backend
       - frontend
     environment:
-      ##
-      ## UserID and GroupID
-      ##
       - NEW_UID
       - NEW_GID
-
   mysql:
-    image: mysql:5.6.40
+    image: 'mysql:5.6.40'
     networks:
       - backend
     environment:
       - MYSQL_ROOT_PASSWORD
     ports:
-      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306"
+      - '${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306'
     volumes:
-      - ${HOST_MYSQL_DATADIR}:/var/lib/mysql
-      - ./mysql/conf:/etc/mysql/conf.d
-
+      - '${HOST_MYSQL_DATADIR}:/var/lib/mysql'
+      - './mysql/conf:/etc/mysql/conf.d'
   mongo:
-    image: mongo:3.6.17
+    image: 'mongo:3.6.17'
     networks:
       - backend
     ports:
-      - "${LOCAL_LISTEN_ADDR}${HOST_PORT_MONGO}:27017"
+      - '${LOCAL_LISTEN_ADDR}${HOST_PORT_MONGO}:27017'
     volumes:
-      - ${HOST_MONGO_DATADIR}:/data/db
-      #- ${DATA_PATH_HOST}/mongo_config:/data/configdb
-
+      - '${HOST_MONGO_DATADIR}:/data/db'
   localstack:
-    image: localstack/localstack:latest
+    image: 'localstack/localstack:latest'
     container_name: localstack_demo
     networks:
       - backend
@@ -96,9 +63,7 @@ services:
       - DEBUG=1
       - DATA_DIR=/tmp/localstack/data
     volumes:
-      - ./localstack/data:/tmp/localstack
-      #- /var/run/docker.sock:/var/run/docker.sock
-      
+      - './localstack/data:/tmp/localstack'
 networks:
-  frontend:
-  backend:
+  frontend: null
+  backend: null
