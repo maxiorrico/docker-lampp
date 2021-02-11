@@ -8,29 +8,32 @@ services:
   #   volumes:
   #     - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
   #     - './php56/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
-  # php73:
-  #   build: ./php73
-  #   networks:
-  #     - backend
-  #   container_name: lampp-php73
-  #   volumes:
-  #     - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
-  #     - './php73/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
-  # apache:
-  #   build: ./apache
-  #   container_name: lampp-apache
-  #   volumes:
-  #     - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
-  #   ports:
-  #     - '${LOCAL_LISTEN_ADDR}81:80'
-  #     - '${LOCAL_LISTEN_ADDR}443:443'
-  #     - '${LOCAL_LISTEN_ADDR}82:8080'
-  #   networks:
-  #     - backend
-  #     - frontend
-  #   environment:
-  #     - NEW_UID
-  #     - NEW_GID
+  php74:
+    build: ./php74
+    networks:
+      - backend
+    container_name: lampp-php74
+    volumes:
+      - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+      - './php74/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
+
+  apache:
+    build: ./apache
+    container_name: lampp-apache
+    volumes:
+      - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+      - './apache/ic.apache.conf:/usr/local/apache2/conf/demo.apache.conf'
+    ports:
+      - '${LOCAL_LISTEN_ADDR}80:80'
+      - '${LOCAL_LISTEN_ADDR}443:443'
+      # - '${LOCAL_LISTEN_ADDR}8000:8080'
+    networks:
+      - backend
+      - frontend
+    environment:
+      - NEW_UID
+      - NEW_GID
+
   mysql57:
     image: 'mysql:5.7.33'
     networks:
