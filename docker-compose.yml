@@ -8,6 +8,7 @@ services:
     volumes:
       - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
       - './php56/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
+      - './php56/php-xdebug.log:/tmp/php-xdebug.log'
   php73:
     build: ./php73
     networks:

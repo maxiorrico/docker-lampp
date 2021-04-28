@@ -18,13 +18,13 @@ RUN \
     apk add --no-cache --virtual .mongodb-ext-build-deps openssl-dev pcre-dev;
 RUN \
     pecl install redis-2.2.8 && \
-    pecl install mongodb && \
+    # pecl install mongodb && \
     pecl install mongo && \
     pecl install xdebug-2.5.5 && \
     apk del .mongodb-ext-build-deps && \
     pecl clear-cache && \
     docker-php-ext-enable redis && \
-    docker-php-ext-enable mongodb && \
+    # docker-php-ext-enable mongodb && \
     docker-php-ext-enable mongo && \
     docker-php-ext-enable xdebug && \
     docker-php-source delete;
