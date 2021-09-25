@@ -11,7 +11,7 @@ RUN apk add --no-cache \
     bzip2-dev \
     gettext \
     gettext-dev \
-    freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+    freetype libpng libjpeg-turbo freetype-dev libpng-dev libwebp-dev libjpeg-turbo-dev \
     libxml2-dev;
 # For pecl , mongo, xdebug
 RUN apk add --update --no-cache --virtual .ext-deps \
@@ -34,6 +34,7 @@ RUN docker-php-ext-configure gettext;
 RUN docker-php-ext-configure gd \
     --with-freetype-dir=/usr/include/ \
     --with-png-dir=/usr/include/ \
+    --with-webp-dir=/usr/include/ \
     --with-jpeg-dir=/usr/include/;
 
 RUN docker-php-ext-install \
