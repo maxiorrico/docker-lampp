@@ -17,6 +17,15 @@ services:
       - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
       - './php74/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
 
+  php81:
+    build: ./php81
+    networks:
+      - backend
+    container_name: lampp-php81
+    volumes:
+      - '${HOST_PATH_HTTPD_DATADIR}:/var/www/html/'
+    #  - './php81/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
+
   apache:
     build: ./apache
     container_name: lampp-apache
@@ -27,6 +36,8 @@ services:
       - '${LOCAL_LISTEN_ADDR}80:80'
       - '${LOCAL_LISTEN_ADDR}443:443'
       # - '${LOCAL_LISTEN_ADDR}8000:8080'
+      # puerto 82 para usart php81
+      - '${LOCAL_LISTEN_ADDR}82:8080'
     networks:
       - backend
       - frontend
