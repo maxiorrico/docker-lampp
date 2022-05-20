@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+  php56:
+    build: ./php56
+    networks:
+      - backend
+    container_name: lampp-php56
+    volumes:
+      - '${HOST_PATH_HTTPD_DATADIR}/intercloudy_prod/:/var/www/html/'
+      - './php56/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/custom-xdebug.ini'
+      - './php56/php-xdebug.log:/tmp/php-xdebug.log'
+
+  apache:
+    build: ./apache
+    container_name: lampp-apache
+    volumes:
+      - '${HOST_PATH_HTTPD_DATADIR}/intercloudy_prod/:/var/www/html/'
+      - './apache/intercloudy.apache.conf:/usr/local/apache2/conf/demo.apache.conf'
+    ports:
+      - '${LOCAL_LISTEN_ADDR}80:80'
+      - '${LOCAL_LISTEN_ADDR}443:443'
+    networks:
+      - backend
+      - frontend
+    environment:
+      - NEW_UID
+      - NEW_GID
+
+  mysql:
+    image: 'mysql:5.6.40'
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD
+    ports:
+      - '${LOCAL_LISTEN_ADDR}${HOST_PORT_MYSQL}:3306'
+    volumes:
+      - '${HOST_MYSQL_DATADIR}:/var/lib/mysql'
+      - './mysql/conf:/etc/mysql/conf.d'
+
+networks:
+  frontend: null
+  backend: null
