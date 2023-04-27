@@ -73,3 +73,8 @@ HOST_PORT_MONGO=27017
 ### Host MySQL data directory (/data/db)
 ###
 HOST_MONGO_DATADIR=~/workspace/mongo/data
+
+##
+## Redis config
+##
+HOST_REDIS_DATADIR_IC=~/workspace/redis/data
