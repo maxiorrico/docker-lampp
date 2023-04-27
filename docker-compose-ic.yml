@@ -38,6 +38,13 @@ services:
       - '${HOST_MYSQL_DATADIR}:/var/lib/mysql'
       - './mysql/conf:/etc/mysql/conf.d'
 
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
 networks:
   frontend: null
   backend: null
